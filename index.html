@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>JavaScript Sandbox</title>
+    <meta charset="UTF-8" />
+    <link rel="stylesheet" href="style.css">
+  </head>
+
+  <body>
+    <div id="app">
+      <section class="container">
+        <h1>Todo List</h1>
+        <table id="todos">
+          <thead>
+            <tr>
+              <th>Tâche</th>
+              <th>Etat</th>
+              <th>Pour</th>
+            </tr>
+          </thead>
+          <tbody>
+
+          </tbody>
+        </table>
+
+          <form action="" class="form-control" id="controller">
+            <button type="submit" class="btn" id="new">Ajoutez</button>
+            <button type="submit" class="btn btn-warning" id="delete">Supprimer</button>
+            <button type="submit" class="btn" id="update">modifier</button>
+          </form>
+      </section>
+      <section class="container hidden" id="modal">
+        <form action="" id="new-todo" class="form-todo">
+          <div>
+            <label for="todo-input">Tâche</label>
+            <input type="text" name="todo-input" id="todo-input">
+          </div>
+          <div>
+            <label for="name-input">Nom</label>
+            <input type="text" name="name-input" id="name-input">
+          </div>
+
+          <button type="submit" class="btn btn-success" id="send">Envoyer</button>
+        </form>
+      </section>
+    </div>
+
+    <script src="./index.js" type="module"></script>
+  </body>
+</html>
