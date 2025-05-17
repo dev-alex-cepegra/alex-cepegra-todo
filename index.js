@@ -1,4 +1,10 @@
 //Functions
+
+// DISPLAY TABLE
+/**
+ *  * Display table
+ * @param {} object It's an array of objects
+ */
 const DisplayTable = (object) => {
 
   object.forEach((o) => {
@@ -22,14 +28,17 @@ const DisplayTable = (object) => {
     table.querySelector("tbody").insertAdjacentHTML("beforeend", templateColTable)
   })
 }
+
+// DISPLAY MODAL
 /**
  * 
- * @param {True Display modal // False Unset modal} boolean 
- * @param {Element HTML for remove or add the class hidden} element 
+ * @param {} boolean True Display modal // False Unset modal
+ * @param {} element Element HTML for remove or add the class hidden
  * @returns void
  */
 const DisplayModal = (boolean, element) => boolean ? element.classList.remove("hidden") : element.classList.add("hidden");
 
+// NEW TODO
 /**
  * Get new task form
  */
