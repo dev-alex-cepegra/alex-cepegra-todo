@@ -110,6 +110,7 @@ const table = document.querySelector('#todos');
 // Listening document
 document.addEventListener('click', e => {
   const target = e.target;
+  
   if (target.name !== 'todo-radio') e.preventDefault();
   if (target.id === 'new') DisplayModal(true, hidden);
   if (target.id === "send") {
@@ -118,13 +119,17 @@ document.addEventListener('click', e => {
     DisplayModal(false, hidden)
   }
   if (target.id === 'delete') {
-    const radio = table.querySelector('#todo-radio');
-    const tr = radio.closest("[data-task_id]")
-    const id = tr.dataset.task_id
 
-    todos = todos.filter((t) => t.id != id);
+    DeleteTodo();
+    table.querySelector('tbody').innerHTML = "";
     DisplayTable(todos)
+  }
+  if (target.checked) {
+    ChangeBackground(target);
+  }
+  if (target.id === 'update'){
 
   }
+  
 })
 
