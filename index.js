@@ -6,7 +6,7 @@
  * @param {} object It's an array of objects
  */
 const DisplayTable = (object) => {
-
+  
   object.forEach((o) => {
     const table = document.querySelector('#todos')
 
@@ -119,7 +119,7 @@ document.addEventListener('click', e => {
     DisplayModal(false, hidden)
   }
   if (target.id === 'delete') {
-
+ 
     DeleteTodo();
     table.querySelector('tbody').innerHTML = "";
     DisplayTable(todos)
@@ -128,8 +128,8 @@ document.addEventListener('click', e => {
     ChangeBackground(target);
   }
   if (target.id === 'update'){
-
-  }
+    
+  } 
   
 })
 

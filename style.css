@@ -1,5 +1,5 @@
 :root {
-  --test: rgba(46, 44, 44, 0.423);
+  --test: rgba(46, 44, 44, 0.144);
   --btn-primary: #007bff;
   --btn-warning: #c82333;
   --btn-success: #28a745;
@@ -29,29 +29,40 @@ body {
 }
 
 select {
-  font-size: 1rem;
+  font-weight: 800;
+  text-align: center;
+  border: none;
+  border-radius: 1rem;
+}
+
+select option {
+  font-weight: 650;
   text-align: center;
 }
 
+
+
 table {
-  border: 1px, solid;
   margin-block-end: 1rem;
+  border-collapse: collapse;
 }
+
+th {
+  padding: 1rem;
+  border-bottom: 1px solid ;
+}
+
 
 td {
-  padding: 0.5rem 0.7rem;
+  padding: 1rem;
+  font-weight: 650;
 }
 
-tr:nth-child(even) {
-  background-color: var(--test);
-}
 
 .form-control {
   display: flex;
   justify-content: space-around;
   width: 100%;
-
-
 }
 
 .btn {
@@ -85,4 +96,13 @@ form .btn-success {
 
 .hidden {
   display: none;
+}
+
+.selected {
+  opacity: 0.5;
+  background-color: var(--test);
+}
+
+.btn:hover {
+  cursor: pointer;
 }
