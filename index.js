@@ -56,6 +56,31 @@ const newTodo = () => {
   table.querySelector('tbody').innerHTML = "";
 }
 
+// DELETE TODO
+/**
+ * Delete todo
+ * search the radio button checked
+ * search the closest tr and get the data-task_id
+ * 
+ */
+const DeleteTodo = () => {
+    const radio = table.querySelector('input[name="todo-radio"]:checked');
+    const tr = radio.closest('[data-task_id]');
+    const id = tr.dataset.task_id;
+    const index = todos.findIndex(t => t.id == id); 
+    todos.splice(index, 1);
+    // Remove the row from the table
+}
+
+// Change background row
+
+const ChangeBackground = (target) => {
+    const opacity = table.querySelector('.selected');
+    if (opacity) opacity.classList.remove('selected');
+    const tr = target.closest('[data-task_id]');
+    tr.classList.add('selected')
+}
+
 // List todo
 const todos = [
   {
