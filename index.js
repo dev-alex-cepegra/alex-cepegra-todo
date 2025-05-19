@@ -6,7 +6,7 @@
  * @param {} object It's an array of objects
  */
 const DisplayTable = (object) => {
-  
+
   object.forEach((o) => {
     const table = document.querySelector('#todos')
 
@@ -36,8 +36,10 @@ const DisplayTable = (object) => {
  * @param {} element Element HTML for remove or add the class hidden
  * @returns void
  */
-const DisplayModal = (boolean, element) => boolean ? element.classList.remove("hidden") : element.classList.add("hidden");
-
+const DisplayModal = (boolean) => {
+  const hidden = document.querySelector('#modal');
+  boolean ? hidden.classList.remove("hidden") : hidden.classList.add("hidden");
+}
 // NEW TODO
 /**
  * Get new task form
@@ -45,7 +47,7 @@ const DisplayModal = (boolean, element) => boolean ? element.classList.remove("h
 const newTodo = () => {
   const formTodo = document.querySelector('#new-todo');
   const title = formTodo.querySelector('#todo-input');
-  const user = formTodo.querySelector('#name-input')
+  const user = formTodo.querySelector('#name-input');
   const newTodos = {
     id: Date.now(),
     titre: title.value,
@@ -64,36 +66,88 @@ const newTodo = () => {
  * 
  */
 const DeleteTodo = () => {
-    const radio = table.querySelector('input[name="todo-radio"]:checked');
+  const radio = table.querySelector('input[name="todo-radio"]:checked');
+  if (!radio) {
+    alert('Veuillez sélectionner une tâche à supprimer')
+  } else {
     const tr = radio.closest('[data-task_id]');
     const id = tr.dataset.task_id;
-    const index = todos.findIndex(t => t.id == id); 
+    const index = todos.findIndex(t => t.id == id);
     todos.splice(index, 1);
-    // Remove the row from the table
+  }
+
+
+  // Remove the row from the table
 }
 
 // Change background row
 
 const ChangeBackground = (target) => {
-    const opacity = table.querySelector('.selected');
-    if (opacity) opacity.classList.remove('selected');
-    const tr = target.closest('[data-task_id]');
-    tr.classList.add('selected')
+  const opacity = table.querySelector('.selected');
+  if (opacity) opacity.classList.remove('selected');
+  const tr = target.closest('[data-task_id]');
+  tr.classList.add('selected')
+}
+
+const ModalUpdate = (formTodo, id) => {
+  let titre = formTodo.querySelector('#todo-input');
+  let user = formTodo.querySelector('#name-input');
+  if (formTodo) {
+    const task = todos.filter(t => t.id == id)[0]
+    titre.value = task.titre;
+    user.value = task.user;
+  }
+}
+
+/**
+ * 
+ * 
+ * @param {} formTodo  HTML ELMENT for get input value
+ * @param {} id  It's ID data
+ * @returns  New array<object>
+ */
+const TodosUpdate = (formTodo, id) => {
+
+  let titre = formTodo.querySelector('#todo-input');
+  let user = formTodo.querySelector('#name-input');
+  console.log(titre.value);
+  const tasks = todos.map(t => {
+    if (t.id == id) {
+      if (t.titre !== titre) t.titre = titre.value;
+      if (t.user !== user) t.user = user.value;
+    }
+    return t
+  })
+  titre.value = '';
+  user.value = '';
+  return tasks;
+
+}
+
+const SwitchBtnSend = (isModif) => {
+  if (isModif) {
+    const sendBtn = document.querySelector('#modif');
+    sendBtn.id = 'send';
+  } else {
+    const sendBtn = document.querySelector('#send');
+    sendBtn.id = 'modif';
+  }
+
 }
 
 // List todo
-const todos = [
+let todos = [
   {
     id: 1,
-    titre: "titre todo",
+    titre: "Vaiselle",
     state: "todo",
     user: "Alex",
   },
   {
     id: 2,
-    titre: "test",
+    titre: "Linge",
     state: "todo",
-    user: "Ma",
+    user: "Maureen",
   },
 ];
 // Init pages
@@ -104,22 +158,21 @@ DisplayTable(todos);
 
 //  Element HTML by ID
 const controller = document.querySelector('#controller')
-const hidden = document.querySelector('#modal');
 const table = document.querySelector('#todos');
 
 // Listening document
 document.addEventListener('click', e => {
   const target = e.target;
-  
+  const formTodo = document.querySelector('#new-todo');
   if (target.name !== 'todo-radio') e.preventDefault();
-  if (target.id === 'new') DisplayModal(true, hidden);
+  if (target.id === 'new') DisplayModal(true);
   if (target.id === "send") {
     newTodo();
     DisplayTable(todos);
-    DisplayModal(false, hidden)
+    DisplayModal(false)
   }
   if (target.id === 'delete') {
- 
+
     DeleteTodo();
     table.querySelector('tbody').innerHTML = "";
     DisplayTable(todos)
@@ -127,9 +180,26 @@ document.addEventListener('click', e => {
   if (target.checked) {
     ChangeBackground(target);
   }
-  if (target.id === 'update'){
-    
-  } 
-  
-})
+  if (target.id === 'update') {
 
+    const id = table.querySelector('input[name="todo-radio"]:checked')?.closest('[data-task_id]').dataset.task_id;
+    if (!id) {
+      alert('select a todo plz');
+
+    } else {
+      SwitchBtnSend(false);
+      DisplayModal(true);
+      ModalUpdate(formTodo, id);
+
+    }
+
+  }
+  if (target.id === 'modif') {
+    const id = table.querySelector('input[name="todo-radio"]:checked')?.closest('[data-task_id]').dataset.task_id;
+    todos = [...TodosUpdate(formTodo, id)]
+    SwitchBtnSend(true);
+    table.querySelector('tbody').innerHTML = "";
+    DisplayTable(todos);
+    DisplayModal(false);
+  }
+})
